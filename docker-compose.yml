@@ -1,0 +1,53 @@
+###########
+#
+# Let's Docker LocalBox
+#
+###########
+
+version: '2'
+services:
+
+  ########### Let's Docker DB
+  letsdocker-up-db:
+    image: mysql:5.7
+    container_name: lets-docker-db
+    hostname: local-lets-docker-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: root
+      MYSQL_PASSWORD: wordpress
+
+  ########### Let's Docker API
+  lets-docker-up-wp:
+    depends_on:
+       - letsdocker-up-db
+    image: wordpress:latest
+    container_name: lets-docker-wp
+    hostname: local-lets-docker-wp
+    volumes:
+      - ../gits/letsdocker/:/var/www/html
+    links:
+      - letsdocker-up-db
+    ports:
+      - "90:80"
+    restart: always
+    environment:
+       WORDPRESS_DB_HOST: letsdocker-up-db:3306
+       WORDPRESS_DB_PASSWORD: wordpress
+
+  ########### Let's Docker phpmyadmin
+  lets-docker-pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: lets-docker-pma
+    hostname: local-lets-docker-pma
+    restart: always
+    links:
+      - letsdocker-up-db:db
+    ports:
+      - 91:80
+
+
+volumes:
+    db_data:
