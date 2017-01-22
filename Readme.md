@@ -1,12 +1,12 @@
 Let's Docker - Platform v1.0
 ==============
 
-* [Preparetion](#preparetion)
+* [Preparation](#preparation)
 * [Installation](#installation)
 * [Credentials](#credentials)
 * [Urls](#urls)
 
-## Preparetion
+## Preparation
 
 Clone "letsdocker" repository into /gits folder.
 
